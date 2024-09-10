@@ -15,9 +15,13 @@ public class Passcode {
         }
     }
 
+    public GuessCell[] getPasscode(){
+        return pass;
+    }
+
     @Override
     public String toString(){
-        String color_pass = null;
+        String color_pass = new String();
         for (GuessCell cell : pass) {
             color_pass += cell + "\t";
         }
