@@ -1,15 +1,25 @@
+
 public class Passcode {
 
-    GuessCell[] pass;
+    private GuessCell[] pass;
 
     public Passcode(){
         pass = new GuessCell[4]; 
-        setPasscode();
+        setRandomPasscode();
+    }
+
+    /** provide an array of string with the desired colors to create a passcode */
+    public Passcode(String[] given_pass){
+        pass = new GuessCell[4];
+        for (int i=0; i<given_pass.length; i++){
+            pass[i] = GuessCell.createCell(given_pass[i]);
+        }
     }
 
 
+
     // setPasscode will populate the 4 array slots with random colors
-    private void setPasscode(){
+    private void setRandomPasscode(){
         for (int i=0; i<pass.length; i++){
             pass[i] = GuessCell.createRandomCell();
         }
