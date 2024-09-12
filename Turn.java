@@ -3,22 +3,21 @@ public class Turn {
     private boolean is_valid;
     private String[] input_array = new String[4];
     private Passcode guess_pass;
+    private int matches = 0;
+    private boolean stop;
     
     
     public Turn(String given_input){
         this.input_array = given_input.split(" ");
         standarizeInput(this.input_array);
         this.is_valid = false;
+        this.stop = false;
     }
 
     private void standarizeInput(String[] given_input){
         for(String color : this.input_array){
             color.toLowerCase().trim();
         }
-    }
-
-    private void saveGuess(String[] given_guess){
-        Game.addGuess(given_guess);
     }
 
     public  boolean isValidInput(){
@@ -34,7 +33,6 @@ public class Turn {
                 return is_valid = false;
             }
         }
-        Game.addGuess(this.input_array);
         passcodeFromGuess(this.input_array); 
         return this.is_valid;
     }
@@ -56,24 +54,38 @@ public class Turn {
 
     public String compareToPasscode(GuessCell[] pass){
         int i =0;
-        int match = 0;
         int contains = 0;
         String output = "matches";
         for(GuessCell cell : pass){
             if (cell.equals(guess_pass.getPasscode()[i])){
-                match += 1;
+                this.matches += 1;
             }
             i++;
         }
         String guess = this.guess_pass.toString();
-        
+        String saved_turn = String.format("%s (You got %d matches to the secret passcode) %n", guess, this.matches);
+        Game.addGuess(saved_turn);
+        String all_guesses = printGuessList();
 
-        return String.format("%s (You got %d matches to the secret passcode) %n", guess, match);
+        return all_guesses;
 
         
     }
 
+    public String printGuessList(){
+        String output = "";
+        for(String guess : Game.guesses){
+            output += guess + "\n";
+        }
+        return output;
+    }
 
+    public boolean isFullMatch(){
+        if (matches == 4){
+            this.stop = true;
+        }
+        return this.stop;
+    }
 
 
 
