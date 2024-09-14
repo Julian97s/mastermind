@@ -22,10 +22,10 @@ public class Game {
     }
 
     public void Play(Game game,Passcode hidden_pass){
-        while (turn < Game.turns) { 
+        while (this.turn < Game.turns) { 
             if(is_correct){
                 System.out.println("Congratulations you won the game!");
-                turn = 7;// to exit the while loop
+                this.turn = 7;// to exit the while loop
                 repeat = true;
             } else{
             System.out.println(String.format("You have %d turns left",7-turn));

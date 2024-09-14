@@ -8,7 +8,7 @@ public class Main {
 
         String[] fixed_pass = new String[] {"red","blue","yellow","green"}; // used to text fixed combinations
         
-        Passcode new_passcode = new Passcode();
+        Passcode new_passcode = new Passcode(fixed_pass);
 
         System.out.println(intro_message);
 
@@ -16,3 +16,9 @@ public class Main {
         
     }
 }
+
+
+/*
+ * im not 100% sure its working with no bus, i believe that sometimes it counts an match AND right color.
+ * im tired and im not going to do no more, maybe tomorrow with a fresh mind
+ */

@@ -4,6 +4,7 @@ public class Turn {
     private String[] input_array = new String[4];
     private Passcode guess_pass;
     private int matches = 0;
+    private int right_color = 0;
     private boolean stop;
     
     
@@ -54,22 +55,36 @@ public class Turn {
 
     public String compareToPasscode(GuessCell[] pass){
         int i =0;
-        int contains = 0;
+        int j =0;
+        boolean contains=false;
         String output = "matches";
         for(GuessCell cell : pass){
-            if (cell.equals(guess_pass.getPasscode()[i])){
+            if (cell.equals(this.guess_pass.getPasscode()[i])){
                 this.matches += 1;
+            } else if(!cell.equals(this.guess_pass.getPasscode()[i])){
+                for(GuessCell cell2 : this.guess_pass.getPasscode()){
+                    if(cell2.getColorName().equals(this.guess_pass.getPasscode()[j].getColorName())){
+                        contains = true;
+                        j++;
+                    }                    
+                }
+                
+            } 
+            if(contains){
+                this.right_color++;
             }
+            j = 0; 
+            // hacer un for loop que cheque cada cell.getColor this.input_array ->contians++
             i++;
-        }
+            // si no es igual entonces hacer un for loop de la celda 
+            
+        } 
         String guess = this.guess_pass.toString();
-        String saved_turn = String.format("%s (You got %d matches to the secret passcode) %n", guess, this.matches);
+        String saved_turn = String.format("%s (%d matches to the secret passcode and %d right color) %n", guess, this.matches,this.right_color);
         Game.addGuess(saved_turn);
         String all_guesses = printGuessList();
 
-        return all_guesses;
-
-        
+        return all_guesses;   
     }
 
     public String printGuessList(){
